@@ -45,9 +45,9 @@ WORKDIR /
 ```
 To create & start the container:
 
-	docker run --name esp8266-builder --device /dev/<ESP8266>:/dev/<ESP8266> -v `pwd`:/build -it esp-build /bin/bash
+	docker run --name esp8266-builder --device /dev/<ESP8266>:/dev/<ESP8266> -v `pwd`:/build -it <IMAGE NAME> /bin/bash
 
-Where `dev/<ESP8266>` should be replaced with the path to the USBtty device of your ESP8266 board.
+Where `dev/<ESP8266>` should be replaced with the path to the USBtty device of your ESP8266 board and `<IMAGE NAME>` is the name of the image you have built using the Dockerfile.
 The command mounts your current working directory into the docker container under `/build`.
 
 ### Configuring
