@@ -1,0 +1,91 @@
+menu "WiFi Connection Information"
+    config WIFI_SSID
+        string "WiFi SSID"
+        default "SomeWiFi"
+        help
+            SSID (network name) for the ESP8266 to connect to.
+
+    config WIFI_PASSWORD
+        string "WiFi Password"
+        default ""
+        help
+            WiFi password (WPA or WPA2) for the ESP8266 to use.
+            Can be left blank if the network has no security set.
+
+endmenu
+
+menu "SNTP Configuration"
+    config SNTP_SERVER
+        string "SNTP (Pool) Server Address"
+        default "pool.ntp.org"
+        help
+            The address of an SNTP-capable time server.
+            Can be an IP or a URL.
+
+    config SLEEP_TIME
+        int "Sleep Time between Queries"
+        default 900
+        help
+            The minimum time to wait between time server queries in seconds.
+            Lower values make switching more responsive but generate more network traffic.
+            Default is 900 seconds ^= 15 minutes.
+
+endmenu
+
+menu "Outlet Switching Settings"
+    menu "Location Settings"
+        config TIMEZONE
+            string "Timezone Specifier"
+            default "GMT+0"
+            help
+                The libc timezone specifier for your current location.
+                See https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html for the format specification.
+
+        config LATITUDE
+            string "Latitude"
+            default "52"
+            help
+                The Latitude of your location used for calculating sunrise and sunset.
+
+        config LONGITUDE
+            string "Longitude"
+            default "1"
+            help
+                The Longitude of your location used for calculating sunrise and sunset.
+
+    endmenu
+
+    choice
+        prompt "Outlet is ON During"
+        default ON_DURING_NIGHT
+        help
+            Whether the outlet should be ON during the day or the night.
+
+        config ON_DURING_NIGHT
+            bool "Night"
+            help
+                The outlet will be turned on from sunset to sunrise.
+                This is the default.
+
+        config ON_DURING_DAY
+            bool "Day"
+            help
+                The outlet will be turned on from sunrise to sunset.
+
+    endchoice
+
+    config ON_OFFSET
+        int "ON Hour Offset"
+        default 0
+        help
+            The number of hours to add to the point in time at which the outlet is supposed to be turned ON.
+            Can be negative to subtract hours.
+
+    config OFF_OFFSET
+        int "OFF Hour Offset"
+        default 0
+        help
+            The number of hours to add to the point in time at which the outlet is supposed to be turned OFF.
+            Can be negative to subtract hours.
+
+endmenu
